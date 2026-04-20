@@ -5,16 +5,16 @@ test('Assert cart cleaned after page refresh', async ({
   menuPage,
 }) => {
   await menuPage.open();
-  await menuPage.clickCappucinoCup();
-  await menuPage.clickEspressoCup();
+  await menuPage.clickCoffeeCup('Cappuccino');
+  await menuPage.clickCoffeeCup('Espresso');
 
   await menuPage.clickCartLink();
   await cartPage.waitForLoading();
 
-  await cartPage.assertCappuccinoItemIsVisible();
+  await cartPage.assertCoffeeItemIsVisible('Cappuccino');
 
   await cartPage.reload();
 
-  await cartPage.assertCappuccinoItemIsHidden();
+  await cartPage.assertCoffeeItemIsNotVisible('Cappuccino');
   await cartPage.assertNoCoffeeMessageIsVisible();
 });

@@ -3,15 +3,6 @@ const { expect } = require('@playwright/test');
 export class MenuPage {
   constructor(page) {
     this.page = page;
-    this.cappuccinoCup = page.getByTestId('Cappuccino');
-    this.cappuccinoCupCost = page
-      .getByRole('listitem')
-      .filter({ has: this.cappuccinoCup });
-    this.espressoCup = page.getByTestId('Espresso');
-    this.espressoCupCost = page
-      .getByRole('listitem')
-      .filter({ has: this.espressoCup });
-    this.americanoCup = page.getByTestId('Americano');
     this.cartLink = page.getByLabel('Cart page');
     this.totalCheckout = page.getByTestId('checkout');
     this.promoMessage = page.getByText(
@@ -27,24 +18,18 @@ export class MenuPage {
     return this.page.getByTestId(testId);
   }
 
+  coffeePriceLocator(coffeName) {
+    return this.page
+      .getByRole('listitem')
+      .filter({ has: this.coffeeCupLocator(coffeName) });
+  }
+
   async open() {
     await this.page.goto('/');
   }
 
   async clickCoffeeCup(coffeeName) {
     await this.coffeeCupLocator(coffeeName).click();
-  }
-
-  async clickCappucinoCup() {
-    await this.cappuccinoCup.click();
-  }
-
-  async clickEspressoCup() {
-    await this.espressoCup.click();
-  }
-
-  async clickAmericanoCup() {
-    await this.americanoCup.click();
   }
 
   async clickCartLink() {
@@ -63,15 +48,11 @@ export class MenuPage {
     await expect(this.totalCheckout).toContainText(value);
   }
 
-  async assertCappuccinoCupCostHasValue(value) {
-    await expect(this.cappuccinoCupCost).toContainText(value);
-  }
-
-  async assertEspressoCupCostHasValue(value) {
-    await expect(this.espressoCupCost).toContainText(value);
-  }
-
   async assertPromoMessageIsVisible() {
     await expect(this.promoMessage).toBeVisible();
+  }
+
+  async assertCoffeCupCostHasValue(coffeeName, price) {
+    await expect(this.coffeePriceLocator(coffeeName)).toContainText(price);
   }
 }

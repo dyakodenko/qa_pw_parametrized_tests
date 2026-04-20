@@ -15,27 +15,38 @@ test('Assert cart updated correctly after clicking plus for drinks', async ({
   const totalPrice = priceFormatStr(totalPriceNum);
 
   await menuPage.open();
-  await menuPage.clickCappucinoCup();
-  await menuPage.clickEspressoCup();
+  await menuPage.clickCoffeeCup('Cappuccino');
+  await menuPage.clickCoffeeCup('Espresso');
 
   await menuPage.clickCartLink();
   await cartPage.waitForLoading();
 
-  await cartPage.assertEspressoTotalCostContainsCorrectText(oneEspressoPrice);
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Espresso',
+    oneEspressoPrice,
+  );
 
-  await cartPage.clickAddOneEspressoButton();
+  await cartPage.coffeeListItemAddOneDrink('Espresso');
 
-  await cartPage.assertEspressoTotalCostContainsCorrectText(twoEspressoPrice);
-  await cartPage.assertCappuccinoTotalCostContainsCorrectText(
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Espresso',
+    twoEspressoPrice,
+  );
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Cappuccino',
     oneCappuccinoPrice,
   );
 
-  await cartPage.clickAddOneCappuccinoButton();
+  await cartPage.coffeeListItemAddOneDrink('Cappuccino');
 
-  await cartPage.assertCappuccinoTotalCostContainsCorrectText(
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Cappuccino',
     twoCappuccinoPrice,
   );
-  await cartPage.assertEspressoTotalCostContainsCorrectText(twoEspressoPrice);
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Espresso',
+    twoEspressoPrice,
+  );
 
   await cartPage.assertTotalCheckoutContainsValue(totalPrice);
 });

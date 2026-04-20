@@ -12,9 +12,9 @@ test('Assert discounted Mocha added to the Cart after promo accepting', async ({
   const americanoPrice = priceFormatStr(COFFEE_PRICES.americano);
 
   await menuPage.open();
-  await menuPage.clickCappucinoCup();
-  await menuPage.clickEspressoCup();
-  await menuPage.clickAmericanoCup();
+  await menuPage.clickCoffeeCup('Cappuccino');
+  await menuPage.clickCoffeeCup('Espresso');
+  await menuPage.clickCoffeeCup('Americano');
 
   await menuPage.assertPromoMessageIsVisible();
 
@@ -23,10 +23,19 @@ test('Assert discounted Mocha added to the Cart after promo accepting', async ({
   await menuPage.clickCartLink();
   await cartPage.waitForLoading();
 
-  await cartPage.assertEspressoTotalCostContainsCorrectText(espressoPrice);
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Espresso',
+    espressoPrice,
+  );
   await cartPage.assertDiscountedMochaTotalCostContainsCorrectText(
     discMochaPrice,
   );
-  await cartPage.assertCappuccinoTotalCostContainsCorrectText(cappuccinoPrice);
-  await cartPage.assertAmericanoTotalCostContainsCorrectText(americanoPrice);
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Cappuccino',
+    cappuccinoPrice,
+  );
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    'Americano',
+    americanoPrice,
+  );
 });
