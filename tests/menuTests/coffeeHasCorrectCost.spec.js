@@ -14,6 +14,6 @@ testParameters.forEach(({ coffee, price }) => {
 
     await menuPage.open();
 
-    await menuPage.assertCoffeCupCostHasValue(coffee, priceFormatted);
+    await menuPage.assertCoffeeCupCostHasValue(coffee, priceFormatted);
   });
 });

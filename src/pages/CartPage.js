@@ -35,27 +35,21 @@ export class CartPage {
   }
 
   coffeeListItemRemoveAllButton(name) {
-    return this.coffeeListItemLocator(name)
-      .getByRole('button', {
-        name: `Remove all ${name}`,
-      })
-      .click();
+    return this.coffeeListItemLocator(name).getByRole('button', {
+      name: `Remove all ${name}`,
+    });
   }
 
   coffeeListItemAddOneDrink(name) {
-    return this.coffeeListItemLocator(name)
-      .getByRole('button', {
-        name: `Add one ${name}`,
-      })
-      .click();
+    return this.coffeeListItemLocator(name).getByRole('button', {
+      name: `Add one ${name}`,
+    });
   }
 
   coffeeListItemRemoveOneDrink(name) {
-    return this.coffeeListItemLocator(name)
-      .getByRole('button', {
-        name: `Remove one ${name}`,
-      })
-      .click();
+    return this.coffeeListItemLocator(name).getByRole('button', {
+      name: `Remove one ${name}`,
+    });
   }
 
   async open() {
@@ -104,5 +98,17 @@ export class CartPage {
 
   async assertTotalCheckoutContainsValue(value) {
     await expect(this.totalCheckout).toContainText(value);
+  }
+
+  async clickCoffeeListItemRemoveAllButton(name) {
+    await this.coffeeListItemRemoveAllButton(name).click();
+  }
+
+  async clickCoffeeListItemAddOneDrink(name) {
+    await this.coffeeListItemAddOneDrink(name).click();
+  }
+
+  async clickCoffeeListItemRemoveOneDrink(name) {
+    await this.coffeeListItemRemoveOneDrink(name).click();
   }
 }

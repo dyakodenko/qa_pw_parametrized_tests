@@ -1,6 +1,6 @@
 import { test } from '../_fixtures/fixtures';
 import { priceFormatStr } from '../../src/common/priceFormatters';
-import { COFFEE_PRICES } from '../../src/constants';
+import { COFFEE_PRICES, COFFEE_NAMES } from '../../src/constants';
 
 test('Assert discounted Mocha added to the Cart after promo accepting', async ({
   cartPage,
@@ -12,9 +12,9 @@ test('Assert discounted Mocha added to the Cart after promo accepting', async ({
   const americanoPrice = priceFormatStr(COFFEE_PRICES.americano);
 
   await menuPage.open();
-  await menuPage.clickCoffeeCup('Cappuccino');
-  await menuPage.clickCoffeeCup('Espresso');
-  await menuPage.clickCoffeeCup('Americano');
+  await menuPage.clickCoffeeCup(COFFEE_NAMES.cappuccino);
+  await menuPage.clickCoffeeCup(COFFEE_NAMES.espresso);
+  await menuPage.clickCoffeeCup(COFFEE_NAMES.americano);
 
   await menuPage.assertPromoMessageIsVisible();
 
@@ -24,18 +24,18 @@ test('Assert discounted Mocha added to the Cart after promo accepting', async ({
   await cartPage.waitForLoading();
 
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Espresso',
+    COFFEE_NAMES.espresso,
     espressoPrice,
   );
   await cartPage.assertDiscountedMochaTotalCostContainsCorrectText(
     discMochaPrice,
   );
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Cappuccino',
+    COFFEE_NAMES.cappuccino,
     cappuccinoPrice,
   );
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Americano',
+    COFFEE_NAMES.americano,
     americanoPrice,
   );
 });

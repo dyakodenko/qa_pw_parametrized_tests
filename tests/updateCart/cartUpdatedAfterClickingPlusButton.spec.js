@@ -1,6 +1,6 @@
 import { test } from '../_fixtures/fixtures';
 import { priceFormatStr } from '../../src/common/priceFormatters';
-import { COFFEE_PRICES } from '../../src/constants';
+import { COFFEE_PRICES, COFFEE_NAMES } from '../../src/constants';
 
 test('Assert cart updated correctly after clicking plus for drinks', async ({
   cartPage,
@@ -14,37 +14,40 @@ test('Assert cart updated correctly after clicking plus for drinks', async ({
     COFFEE_PRICES.cappuccino * 2 + COFFEE_PRICES.espresso * 2;
   const totalPrice = priceFormatStr(totalPriceNum);
 
+  const cappuccino = COFFEE_NAMES.cappuccino;
+  const espresso = COFFEE_NAMES.espresso;
+
   await menuPage.open();
-  await menuPage.clickCoffeeCup('Cappuccino');
-  await menuPage.clickCoffeeCup('Espresso');
+  await menuPage.clickCoffeeCup(cappuccino);
+  await menuPage.clickCoffeeCup(espresso);
 
   await menuPage.clickCartLink();
   await cartPage.waitForLoading();
 
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Espresso',
+    espresso,
     oneEspressoPrice,
   );
 
-  await cartPage.coffeeListItemAddOneDrink('Espresso');
+  await cartPage.clickCoffeeListItemAddOneDrink(espresso);
 
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Espresso',
+    espresso,
     twoEspressoPrice,
   );
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Cappuccino',
+    cappuccino,
     oneCappuccinoPrice,
   );
 
-  await cartPage.coffeeListItemAddOneDrink('Cappuccino');
+  await cartPage.clickCoffeeListItemAddOneDrink(cappuccino);
 
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Cappuccino',
+    cappuccino,
     twoCappuccinoPrice,
   );
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
-    'Espresso',
+    espresso,
     twoEspressoPrice,
   );
 

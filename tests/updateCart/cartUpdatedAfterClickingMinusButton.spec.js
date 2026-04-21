@@ -1,25 +1,29 @@
 import { test } from '../_fixtures/fixtures';
+import { COFFEE_NAMES } from '../../src/constants';
 
 test('Assert cart updated correctly after clicking minus for drinks', async ({
   cartPage,
   menuPage,
 }) => {
+  const cappuccino = COFFEE_NAMES.cappuccino;
+  const espresso = COFFEE_NAMES.espresso;
+
   await menuPage.open();
-  await menuPage.clickCoffeeCup('Cappuccino');
-  await menuPage.clickCoffeeCup('Espresso');
+  await menuPage.clickCoffeeCup(cappuccino);
+  await menuPage.clickCoffeeCup(espresso);
 
   await menuPage.clickCartLink();
   await cartPage.waitForLoading();
 
-  await cartPage.assertCoffeeNameContainsCorrectText('Espresso');
+  await cartPage.assertCoffeeNameContainsCorrectText(espresso);
 
-  await cartPage.coffeeListItemRemoveOneDrink('Espresso');
+  await cartPage.clickCoffeeListItemRemoveOneDrink(espresso);
 
-  await cartPage.assertCoffeeItemIsNotVisible('Espresso');
-  await cartPage.assertCoffeeNameContainsCorrectText('Cappuccino');
+  await cartPage.assertCoffeeItemIsNotVisible(espresso);
+  await cartPage.assertCoffeeNameContainsCorrectText(cappuccino);
 
-  await cartPage.coffeeListItemRemoveOneDrink('Cappuccino');
+  await cartPage.clickCoffeeListItemRemoveOneDrink(cappuccino);
 
-  await cartPage.assertCoffeeItemIsNotVisible('Cappuccino');
+  await cartPage.assertCoffeeItemIsNotVisible(cappuccino);
   await cartPage.assertNoCoffeeMessageIsVisible();
 });

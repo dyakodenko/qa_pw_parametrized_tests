@@ -18,7 +18,7 @@ testParameters.forEach(({ coffee }) => {
     await menuPage.clickCartLink();
     await cartPage.waitForLoading();
 
-    await cartPage.coffeeListItemRemoveAllButton(coffee);
+    await cartPage.clickCoffeeListItemRemoveAllButton(coffee);
     await cartPage.assertNoCoffeeMessageIsVisible();
   });
 });
