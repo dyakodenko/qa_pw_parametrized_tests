@@ -4,16 +4,6 @@ export class CartPage {
   constructor(page) {
     this.page = page;
     this.cartListLocator = page.getByRole('list').nth(1);
-
-    this.discountedMochaItem = this.cartListLocator
-      .getByRole('listitem')
-      .filter({ hasText: '(Discounted) Mocha' });
-    this.discountedMochaName = this.discountedMochaItem.locator('div').nth(0);
-    this.discountedMochaUnit = this.discountedMochaItem.locator('div').nth(1);
-    this.discountedMochaTotalCost = this.discountedMochaItem
-      .locator('div')
-      .nth(3);
-
     this.notCoffeeMessage = page.getByText('No coffee, go add some.');
     this.totalCheckout = page.getByTestId('checkout');
   }
@@ -82,14 +72,6 @@ export class CartPage {
 
   async assertCoffeeTotalCostContainsCorrectText(name, text) {
     await expect(this.coffeeListItemTotalCostCell(name)).toContainText(text);
-  }
-
-  async assertDiscountedMochaItemIsHidden() {
-    await expect(this.discountedMochaItem).toBeHidden();
-  }
-
-  async assertDiscountedMochaTotalCostContainsCorrectText(text) {
-    await expect(this.discountedMochaTotalCost).toContainText(text);
   }
 
   async assertNoCoffeeMessageIsVisible() {

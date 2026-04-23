@@ -27,7 +27,8 @@ test('Assert discounted Mocha added to the Cart after promo accepting', async ({
     COFFEE_NAMES.espresso,
     espressoPrice,
   );
-  await cartPage.assertDiscountedMochaTotalCostContainsCorrectText(
+  await cartPage.assertCoffeeTotalCostContainsCorrectText(
+    COFFEE_NAMES.mocha,
     discMochaPrice,
   );
   await cartPage.assertCoffeeTotalCostContainsCorrectText(
